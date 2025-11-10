@@ -1,0 +1,47 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:16
+    container_name: resumehub-db
+    restart: always
+    environment:
+      POSTGRES_USER: resumehub
+      POSTGRES_PASSWORD: resumehub
+      POSTGRES_DB: resumehub
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7
+    container_name: resumehub-redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+  api:
+    build: .
+    container_name: resumehub-api
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    environment:
+      - DATABASE_URL=postgresql+psycopg2://resumehub:resumehub@db:5432/resumehub
+      - REDIS_URL=redis://redis:6379/0
+      - AWS_ACCESS_KEY_ID=dummy
+      - AWS_SECRET_ACCESS_KEY=dummy
+      - AWS_REGION=ap-south-1
+      - S3_BUCKET_NAME=resumehub-bucket
+      - JWT_SECRET=supersecretjwtkey
+      - JWT_ALGORITHM=HS256
+      - DEBUG=True
+
+volumes:
+  postgres_data:

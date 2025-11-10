@@ -1,0 +1,30 @@
+# Web framework
+fastapi
+uvicorn[standard]
+
+# ORM + DB
+SQLAlchemy
+alembic
+psycopg2-binary
+
+# Auth
+python-jose
+passlib[bcrypt]
+
+# File handling
+aiofiles
+boto3
+
+# Data validation
+pydantic
+python-multipart
+
+# HTML sanitization
+bleach
+
+# Environment management
+python-dotenv
+
+# Background tasks (future)
+celery
+redis
