@@ -34,3 +34,6 @@ migrations/versions/*.pyc
 
 # Local uploads
 uploads/
+
+#local files
+resumehub_context.md
