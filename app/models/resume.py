@@ -16,5 +16,14 @@ class Resume(Base):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
     user = relationship("User", backref="resumes")
-    versions = relationship("ResumeVersion", back_populates="resume", cascade="all, delete-orphan")
-    active_version = relationship("ResumeVersion",foreign_keys=[active_version_id],uselist=False,post_update=True)
+    versions = relationship(
+    "ResumeVersion",
+    back_populates="resume",
+    foreign_keys="ResumeVersion.resume_id"   
+)
+
+    active_version = relationship(
+        "ResumeVersion",
+        foreign_keys=[active_version_id],
+        uselist=False
+    )

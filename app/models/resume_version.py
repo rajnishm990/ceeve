@@ -16,4 +16,8 @@ class ResumeVersion(Base):
 
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
-    resume = relationship("Resume", back_populates="versions")
+    resume = relationship(
+    "Resume",
+    back_populates="versions",
+    foreign_keys=[resume_id]
+    )

@@ -2,9 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware 
 from app.core.config import settings 
 from app.core.database import engine , Base
-
-# Import routers (will add them later)
-# from app.routers import auth_router, resume_router 
+from app.routers import auth_router, resume_router 
 
 # Create DB tables (for dev only — in prod use Alembic)
 Base.metadata.create_all(bind=engine) 
@@ -26,9 +24,9 @@ app.add_middleware(
 )
 
 
-# Include routers
-# app.include_router(auth_router.router, prefix="/auth", tags=["Auth"])
-# app.include_router(resume_router.router, prefix="/resume", tags=["Resume"])
+#Include routers
+app.include_router(auth_router.router, prefix="/auth", tags=["Auth"])
+app.include_router(resume_router.router, prefix="/api", tags=["Resume"])
 
 @app.get("/")
 def root():

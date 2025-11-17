@@ -1,4 +1,4 @@
-from pydantic import BaseModel 
+from pydantic import BaseModel , Field
 from datetime import datetime 
 from typing import Optional , Any
 from pydantic import BaseModel
@@ -12,13 +12,13 @@ class ResumeBase(BaseModel):
 
 
 class ResumeCreate(ResumeBase):
-    filename: Optional[str]= None
+    file_name: Optional[str]= None
 
 
 class ResumeRead(ResumeBase):
     id: int 
     file_name: Optional[str] = None 
-    shareable_link: Optional[str]
+    shareable_link: Optional[str] = Field(alias="shareable_slug")
     created_at : datetime 
     updated_at: Optional[datetime]
     versions: List[ResumeVersionRead] = []
